@@ -3,7 +3,7 @@ var router = express.Router();
 var db = require('../databases/main.js')
 
 /* GET home page. */
-router.get('/', function(req, res, next) {
+router.post('/', function(req, res, next) {
     db.serialize(function () {
         db.run('CREATE TABLE IF NOT EXISTS lorem (info TEXT)')
         var stmt = db.prepare('INSERT INTO lorem VALUES (?)')
