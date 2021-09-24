@@ -8,4 +8,9 @@ router.get('/', function(req, res, next) {
     res.render('status', req);
 });
 
+router.post('/', function(req, res, next) {
+
+    res.render('status', req);
+});
+
 module.exports = router;
