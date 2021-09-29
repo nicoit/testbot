@@ -79,7 +79,7 @@
         <div class="modal-card">
             <header class="modal-card-head">
                 <p class="modal-card-title">Modal title</p>
-                <button class="delete" aria-label="close"></button>
+                <button class="delete" aria-label="close" @click="nuevo = !nuevo"></button>
             </header>
             <section class="modal-card-body">
                 <form class="box">
@@ -101,7 +101,7 @@
             </section>
             <footer class="modal-card-foot">
                 <button class="button is-primary">Guardar</button>
-                <button class="button">Cancel</button>
+                <button class="button" @click="nuevo = !nuevo">Cancelar</button>
             </footer>
         </div>
     </div>
@@ -153,7 +153,8 @@
         el: '#app',
         data: {
             urls: {
-                getUsers: '/users'
+                getUsers: '/api/users',
+                createUSer: '/api/users'
             },
             newuser: {
                 email: '',
@@ -168,7 +169,18 @@
                 axios.get(this.urls.getUsers).then( function (response) {
                     this.users = response.data
                 })
+            },
+            createUser: function () {
+                axios.post(this.urls.getUsers, this.newuser).then( function (response) {
+                    this.nuevo = false;
+                    this.getUsers()
+                })
             }
+        },
+        watch: {
+           nuevo() {
+               this.newuser = {};
+           }
         }
     })
 </script>
