@@ -2,9 +2,14 @@
 <html>
   <head>
     <title>{{title}}</title>
-    <link rel='stylesheet' href='/stylesheets/style.css' />
+<!--    <link rel='stylesheet' href='/stylesheets/style.css' />-->
+      <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bulma/0.9.3/css/bulma.min.css" integrity="sha512-IgmDkwzs96t4SrChW29No3NXBIBv8baW490zk5aXvhCD8vuZM3yUSkbyTBcXohkySecyzIrUwiF/qV0cuPcL3Q==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+      <script src="https://cdn.jsdelivr.net/npm/vue@2/dist/vue.js"></script>
   </head>
   <body>
-    {{{body}}}
+  <div id="app">
+      {{!! {{ message }} !!}}
+  </div>
+    <input class="input" type="text" placeholder="Text input">
   </body>
 </html>
