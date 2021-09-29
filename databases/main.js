@@ -1,5 +1,12 @@
-const sqlite3 = require('sqlite3').verbose();
+const Sequelize = require('sequelize');
+const sequelize = new Sequelize({
+    // The `host` parameter is required for other databases
+    // host: 'localhost'
+    dialect: 'sqlite',
+    storage: './database.sqlite'
+})
 
+const sqlite3 = require('sqlite3').verbose();
 
 let db = new sqlite3.Database('mydb.db', (err) => {
     if (err) {
@@ -20,6 +27,7 @@ let db = new sqlite3.Database('mydb.db', (err) => {
                     // Table already created
                 }else{
                     // Table just created, creating some rows
+                    console.log('seeding  the SQLite users database.')
                    var insert = 'INSERT INTO user (name, email, password) VALUES (?,?,?)'
                     db.run(insert, ["admin","admin@example.com","admin123456"])
                     db.run(insert, ["user","user@example.com","user123456"])

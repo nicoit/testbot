@@ -5,14 +5,6 @@ var cookieParser = require('cookie-parser');
 var logger = require('morgan');
 
 
-
-
-
-
-var indexRouter = require('./routes/index');
-var usersRouter = require('./routes/users');
-var statusRouter = require('./routes/status');
-var demoRouter = require('./routes/demo-reply');
 const port = 3001
 //db.close();
 var app = express();
@@ -25,11 +17,10 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
-
-app.use('/', indexRouter);
-app.use('/users', usersRouter);
-app.use('/status', statusRouter);
-app.use('/demo-reply', demoRouter);
+require('./routes')(app)
+app.get('*', (req, res) => res.status(200).send({
+  message: 'Welcome to the beginning of nothingness.',
+}));
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {

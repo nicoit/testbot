@@ -1,9 +1,13 @@
-var express = require('express');
-var router = express.Router();
+/* Controllers */
+const UserController = require('../controllers/UserController');
 
-/* GET home page. */
-router.get('/', function(req, res, next) {
-  res.render('index', { title: 'Express' });
-});
-
-module.exports = router;
+module.exports = (app) => {
+  app.get('/api', (req, res) => res.status(200).send({
+    message: 'Example project did not give you access to the api web services',
+  }));
+  app.post('/api/users/create/username/:username/status/:status', UserController.create);
+  app.get('/api/users', UserController.list);
+  app.get('/api/users/find/username/:username', UserController.find);
+  app.get('/users', UserController.list);
+  app.get('/', UserController.list);
+};
