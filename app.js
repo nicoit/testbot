@@ -2,33 +2,32 @@ var createError = require('http-errors');
 var express = require('express');
 var path = require('path');
 var cookieParser = require('cookie-parser');
+var bodyParser = require('body-parser');
 var logger = require('morgan');
 var api = require('./routes/api');
 var ui = require('./routes/ui');
 
 
-
 const port = 3001
-//db.close();
+
 var app = express();
-// view engine setup
+
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'hbs');
 
 app.use(logger('dev'));
-app.use(express.json());
-app.use(express.urlencoded({ extended: false }));
+app.use(bodyParser.json());
+app.use(bodyParser.urlencoded({extended: true}));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 app.use('/api', api);
 app.use('/ui', ui);
-require('./routes')(app)
-app.get('*', (req, res) => res.status(200).send({
+/*app.get('*', (req, res) => res.status(200).send({
   message: 'Welcome to the beginning of nothingness.',
-}));
+}));*/
 
 // catch 404 and forward to error handler
-app.use(function(req, res, next) {
+app.use(function (req, res, next) {
   next(createError(404));
 });
 
@@ -43,6 +42,6 @@ app.use(function(err, req, res, next) {
   res.render('error');
 });
 app.listen(port, () => {
-  console.log(`Example app listening at http://localhost:${port}`)
+  console.log(`Listening at http://localhost:${port}`)
 })
 module.exports = app;

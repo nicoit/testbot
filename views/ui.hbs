@@ -100,14 +100,14 @@
                 </form>
             </section>
             <footer class="modal-card-foot">
-                <button class="button is-primary">Guardar</button>
+                <button class="button is-primary" @click="createUser()">Guardar</button>
                 <button class="button" @click="nuevo = !nuevo">Cancelar</button>
             </footer>
         </div>
     </div>
     <nav class="panel">
         <p class="panel-heading">
-            Repositories
+            Users
         </p>
         <div class="panel-block">
             <p class="control has-icons-left">
@@ -117,29 +117,29 @@
       </span>
             </p>
         </div>
-        <p class="panel-tabs">
-            <a class="is-active">All</a>
-            <a>Public</a>
-            <a>Private</a>
-            <a>Sources</a>
-            <a>Forks</a>
-        </p>
-       <!-- <a class="panel-block is-active">
-    <span class="panel-icon">
-      <i class="fas fa-book" aria-hidden="true"></i>
-    </span>
-            bulma
-        </a>-->
-        <a class="panel-block" v-for="user in users" :key="user.email">
+        <!--        <p class="panel-tabs">
+                    <a class="is-active">All</a>
+                    <a>Public</a>
+                    <a>Private</a>
+                    <a>Sources</a>
+                    <a>Forks</a>
+                </p>-->
+        <!-- <a class="panel-block is-active">
+     <span class="panel-icon">
+       <i class="fas fa-book" aria-hidden="true"></i>
+     </span>
+             bulma
+         </a>-->
+        <a class="panel-block" v-for="user in users" :key="user.id">
     <span class="panel-icon">
       <i class="fas fa-book" aria-hidden="true"></i>
     </span>
             \{{ user.email }}
         </a>
-        <label class="panel-block">
-            <input type="checkbox">
-            remember me
-        </label>
+        <!--        <label class="panel-block">
+                    <input type="checkbox">
+                    remember me
+                </label>-->
         <div class="panel-block">
             <button class="button is-link is-outlined is-fullwidth" @click="getUsers()">
                 Refrescar
@@ -147,7 +147,6 @@
         </div>
     </nav>
 </div>
-
 <script>
     var app = new Vue({
         el: '#app',
@@ -166,21 +165,23 @@
         },
         methods: {
             getUsers: function () {
-                axios.get(this.urls.getUsers).then( function (response) {
-                    this.users = response.data
+                let vm = this;
+                axios.get(this.urls.getUsers).then(function (response) {
+                    vm.users = response.data.data
                 })
             },
             createUser: function () {
-                axios.post(this.urls.getUsers, this.newuser).then( function (response) {
-                    this.nuevo = false;
-                    this.getUsers()
+                let vm = this;
+                axios.post(this.urls.getUsers, this.newuser).then(function (response) {
+                    vm.nuevo = false;
+                    vm.getUsers()
                 })
             }
         },
         watch: {
-           nuevo() {
-               this.newuser = {};
-           }
+            nuevo() {
+                this.newuser = {};
+            }
         }
     })
 </script>
